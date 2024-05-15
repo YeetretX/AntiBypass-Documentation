@@ -8,13 +8,29 @@ AntiBypass is a C# .NET library designed to protect your applications from threa
 
 - 🔍 Check assemblies for hooks.
 - 🚫 Detect sniffers.
-- 🔒 Secure connections for downloading files, strings, etc.
+- 🔒 Secure connections.
+
+## Initialization
+
+Before using the methods, you need to initialize AntiBypass with your username and license.
+
+### Syntax
+
+```csharp
+AntiBypass.AntiBypass antibypassVariable = new AntiBypass.AntiBypass("UserName", "License");
+```
+
+### Example
+
+```csharp
+AntiBypass.AntiBypass antibypass = new AntiBypass.AntiBypass("YourUserName", "YourLicenseKey");
+```
 
 ## Methods
 
 ### 🔍 CheckHooks
 
-This method checks an assembly for hooks (nasty stuff that can bypass or crack your app).
+This method checks an assembly for hooks (nasty stuff that can harm your app).
 
 #### Syntax
 
@@ -36,7 +52,7 @@ public Task<bool> CheckHooks(Assembly assembly, Tuple<bool, string> canLog = nul
 
 ```csharp
 Assembly myAssembly = Assembly.GetExecutingAssembly();
-var result = await AntiBypass.CheckHooks(myAssembly, new Tuple<bool, string>(true, "Discord Webhook"), true);
+var result = await antibypass.CheckHooks(myAssembly, new Tuple<bool, string>(true, "Discord Webhook Here"), true);
 
 if(result)
 {
@@ -65,7 +81,7 @@ public bool CheckSniffer()
 #### Example
 
 ```csharp
-bool isSnifferDetected = AntiBypass.CheckSniffer();
+bool isSnifferDetected = antibypass.CheckSniffer();
 
 if(isSnifferDetected)
 {
@@ -79,7 +95,7 @@ else
 
 ### 🔒 SecureConnection
 
-This method secures a connection using SSL certificates (to keep your data safe and private).
+This method secures a connection so you can download files or strings, etc without worrying that your links are unsafe.
 
 #### Syntax
 
@@ -102,10 +118,10 @@ public bool SecureConnection(Func<Task> code, List<string> certificates)
 List<string> certificates = new List<string> { "cert1", "cert2" };
 Func<Task> secureCode = async () =>
 {
-    // Your download code here
+    // Your secure code here
 };
 
-bool isConnectionSecured = AntiBypass.SecureConnection(secureCode, certificates);
+bool isConnectionSecured = antibypass.SecureConnection(secureCode, certificates);
 
 if(isConnectionSecured)
 {
